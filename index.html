@@ -8,79 +8,69 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>Rut - Prueba de Cámara</title>
+<title>RUT - Escáner QR</title>
+
+<script src="https://unpkg.com/html5-qrcode"
+        type="text/javascript"></script>
 
 <style>
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   padding: 20px;
-  font-family: Arial, sans-serif;
   background: #f3e8ed;
+  font-family: Arial, sans-serif;
   color: #333;
 }
 
 .contenedor {
-  max-width: 600px;
+  max-width: 650px;
   margin: auto;
 }
 
 .tarjeta {
   background: white;
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 25px;
   box-shadow: 0 8px 25px rgba(0,0,0,.15);
 }
 
-h1 {
+.logo {
   text-align: center;
-  margin-bottom: 5px;
+  font-size: 38px;
+  font-weight: bold;
+  color: #8b5e3c;
 }
 
-h2 {
+.titulo {
   text-align: center;
-  font-weight: normal;
-  margin-top: 0;
+  font-size: 27px;
+  color: #555;
+  margin-top: 5px;
+}
+
+.evento {
+  text-align: center;
+  color: #777;
+  margin-bottom: 20px;
 }
 
 .info {
-  text-align: center;
-  margin: 20px 0;
-}
-
-.camara {
-  width: 100%;
-  height: 350px;
-  background: #111;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: none;
-}
-
-.placeholder {
-  color: white;
-  text-align: center;
-  font-size: 20px;
-}
-
-button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 16px;
-  border: none;
+  background: #faf5f0;
+  padding: 15px;
   border-radius: 12px;
-  background: #8b5e3c;
-  color: white;
-  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#reader {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
 }
 
 .estado {
@@ -94,65 +84,134 @@ button {
 
 .exito {
   color: #26734d;
+  background: #edf8f1;
 }
 
 .error {
   color: #b00020;
+  background: #fff0f0;
+}
+
+.resultado {
+  display: none;
+  margin-top: 20px;
+  padding: 18px;
+  background: #fafafa;
+  border-radius: 14px;
+}
+
+.dato {
+  margin: 12px 0;
+  word-break: break-word;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: #8b5e3c;
+  color: white;
+  font-size: 17px;
 }
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="contenedor">
 
 <div class="tarjeta">
 
-<h1>RUT</h1>
 
-<h2>Prueba de cámara</h2>
+<div class="logo">
+RUT
+</div>
 
-<div class="info">
+
+<div class="titulo">
+Escáner QR
+</div>
+
+
+<div class="evento">
 Congreso Mujer Bella 2026
 </div>
 
-<div class="camara">
 
-<div
-class="placeholder"
-id="placeholder">
+<div class="info">
 
-📷<br><br>
+<b>Puesto:</b>
 
-Cámara esperando...
-
-</div>
-
-<video
-id="video"
-autoplay
-playsinline
-muted>
-</video>
+<span id="puesto">
+P1
+</span>
 
 </div>
 
-<button
-id="activar">
-
-📷 Activar cámara
-
-</button>
 
 <div
 class="estado"
 id="estado">
 
-Esperando autorización...
+Preparando escáner...
 
 </div>
+
+
+<div id="reader"></div>
+
+
+<div
+class="resultado"
+id="resultado">
+
+<h3>
+QR detectado
+</h3>
+
+
+<div class="dato">
+
+<b>Contenido:</b>
+
+<div id="contenidoQR">
+-
+</div>
+
+</div>
+
+
+<hr>
+
+
+<div class="dato">
+
+<b>ID Participante:</b>
+
+<span id="idParticipante">
+-
+</span>
+
+</div>
+
+
+</div>
+
+
+<button
+id="btnNuevo"
+style="display:none;">
+
+📷 Escanear otro QR
+
+</button>
+
 
 </div>
 
@@ -161,29 +220,39 @@ Esperando autorización...
 
 <script>
 
-const video =
-document.getElementById("video");
 
-const boton =
-document.getElementById("activar");
+let scanner = null;
+
+let procesando = false;
+
 
 const estado =
 document.getElementById("estado");
 
-const placeholder =
-document.getElementById("placeholder");
+const resultado =
+document.getElementById("resultado");
+
+const contenidoQR =
+document.getElementById("contenidoQR");
+
+const idParticipante =
+document.getElementById("idParticipante");
+
+const btnNuevo =
+document.getElementById("btnNuevo");
 
 
-let stream = null;
+/**
+ * =====================================================
+ * INICIAR ESCÁNER
+ * =====================================================
+ */
+
+function iniciarEscaner() {
 
 
-boton.addEventListener(
-"click",
-activarCamara
-);
+procesando = false;
 
-
-async function activarCamara() {
 
 estado.textContent =
 "Solicitando acceso a la cámara...";
@@ -192,66 +261,258 @@ estado.className =
 "estado";
 
 
-try {
+scanner =
+new Html5Qrcode("reader");
 
-stream =
-await navigator.mediaDevices.getUserMedia({
 
-video: {
-facingMode: {
-ideal: "environment"
-}
+scanner.start(
+
+{
+facingMode: "environment"
 },
 
-audio: false
+{
+fps: 10,
+
+qrbox: {
+width: 250,
+height: 250
+}
+
+},
+
+qrDetectado,
+
+errorLectura
+
+)
+
+.then(function() {
+
+estado.textContent =
+"📷 Cámara activa. Apuntá al código QR.";
+
+estado.className =
+"estado";
+
+})
+
+.catch(function(error) {
+
+console.error(error);
+
+estado.innerHTML =
+"❌ No se pudo activar la cámara.<br><br>" +
+error;
+
+estado.className =
+"estado error";
 
 });
 
-
-video.srcObject =
-stream;
+}
 
 
-await video.play();
+/**
+ * =====================================================
+ * QR DETECTADO
+ * =====================================================
+ */
+
+function qrDetectado(texto) {
 
 
-video.style.display =
-"block";
+if (procesando) {
+return;
+}
 
-placeholder.style.display =
-"none";
 
+procesando = true;
+
+
+console.log(
+"QR detectado:",
+texto
+);
+
+
+scanner.stop()
+
+.then(function() {
+
+mostrarResultado(texto);
+
+})
+
+.catch(function(error) {
+
+console.error(error);
+
+mostrarResultado(texto);
+
+});
+
+}
+
+
+/**
+ * =====================================================
+ * ERROR DE LECTURA
+ * =====================================================
+ */
+
+function errorLectura(error) {
+
+
+// No mostramos errores individuales.
+// El lector está buscando continuamente.
+
+}
+
+
+/**
+ * =====================================================
+ * PROCESAR QR
+ * =====================================================
+ */
+
+function mostrarResultado(texto) {
+
+
+contenidoQR.textContent =
+texto;
+
+
+let id = "-";
+
+
+const partes =
+String(texto).split("|");
+
+
+/*
+Formato esperado:
+
+RUT|1|MB26|ID|MBP26-0007
+*/
+
+
+if (
+partes.length >= 5 &&
+partes[0] === "RUT" &&
+partes[3] === "ID"
+) {
+
+id =
+partes[4];
 
 estado.textContent =
-"✅ Cámara funcionando correctamente";
+"✅ QR válido";
 
 estado.className =
 "estado exito";
 
-
 }
 
+else {
 
-catch(error) {
-
-console.error(error);
-
-
-estado.innerHTML =
-"❌ Error de cámara:<br><br>" +
-error.name +
-"<br>" +
-error.message;
-
+estado.textContent =
+"⚠️ QR leído, pero formato no reconocido";
 
 estado.className =
 "estado error";
 
 }
 
+
+idParticipante.textContent =
+id;
+
+
+resultado.style.display =
+"block";
+
+
+btnNuevo.style.display =
+"block";
+
 }
 
+
+/**
+ * =====================================================
+ * NUEVO ESCANEO
+ * =====================================================
+ */
+
+btnNuevo.addEventListener(
+"click",
+function() {
+
+
+resultado.style.display =
+"none";
+
+
+btnNuevo.style.display =
+"none";
+
+
+contenidoQR.textContent =
+"-";
+
+
+idParticipante.textContent =
+"-";
+
+
+if (scanner) {
+
+scanner.clear()
+.then(function() {
+
+scanner = null;
+
+iniciarEscaner();
+
+})
+
+.catch(function() {
+
+scanner = null;
+
+iniciarEscaner();
+
+});
+
+}
+
+else {
+
+iniciarEscaner();
+
+}
+
+});
+
+
+/**
+ * =====================================================
+ * INICIO
+ * =====================================================
+ */
+
+window.addEventListener(
+"load",
+function() {
+
+iniciarEscaner();
+
+});
+
+
 </script>
+
 
 </body>
 
