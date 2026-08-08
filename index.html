@@ -8,195 +8,769 @@
 <meta name="viewport"
       content="width=device-width, initial-scale=1.0">
 
-<title>RUT - Acreditación</title>
+<meta name="theme-color"
+      content="#6f5141">
 
-<script src="https://unpkg.com/html5-qrcode"
-        type="text/javascript"></script>
+<title>RUT · Acreditación · Mujer Bella 2026</title>
+
+<script
+  src="https://unpkg.com/html5-qrcode"
+  type="text/javascript">
+</script>
+
 
 <style>
+
+/* =====================================================
+   RUT · ACREDITACIÓN
+   Congreso Mujer Bella 2026
+   Diseño responsive
+   Notebook · Android · iPhone · Tablets
+   ===================================================== */
 
 * {
   box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
-  padding: 20px;
-  background: #f4ece7;
-  font-family: Arial, sans-serif;
-  color: #333;
+  padding: 0;
+  min-height: 100%;
 }
+
+body {
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8f2ee 0%,
+      #f1e6df 50%,
+      #faf7f4 100%
+    );
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+
+  color: #3f3732;
+}
+
+
+/* =====================================================
+   CONTENEDOR GENERAL
+   ===================================================== */
+
+.pagina {
+
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 24px;
+}
+
 
 .contenedor {
-  max-width: 620px;
+
+  width: 100%;
+  max-width: 1120px;
+
   margin: auto;
 }
 
-.tarjeta {
-  background: #ffffff;
-  border-radius: 24px;
-  padding: 26px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.14);
+
+/* =====================================================
+   TARJETA PRINCIPAL
+   ===================================================== */
+
+.tarjeta-principal {
+
+  background: rgba(255,255,255,.96);
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 18px 50px rgba(77,55,43,.15);
+
+  overflow: hidden;
+
+  border: 1px solid rgba(139,94,60,.10);
 }
 
-.logo {
+
+/* =====================================================
+   ENCABEZADO
+   ===================================================== */
+
+.encabezado {
+
+  padding: 28px 34px 24px;
+
   text-align: center;
-  font-size: 42px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  color: #8b5e3c;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6f5141,
+      #8d6a55
+    );
+
+  color: white;
+
+  position: relative;
 }
 
-.titulo {
-  text-align: center;
-  font-size: 26px;
-  margin-top: 5px;
-  color: #444;
+
+.marca {
+
+  font-size: 38px;
+
+  font-weight: 800;
+
+  letter-spacing: 6px;
+
+  line-height: 1;
+
+  margin-bottom: 8px;
 }
+
+
+.submarca {
+
+  font-size: 17px;
+
+  letter-spacing: 1.5px;
+
+  opacity: .95;
+
+  margin-bottom: 6px;
+}
+
 
 .evento {
-  text-align: center;
-  color: #777;
-  margin-bottom: 22px;
+
+  font-size: 14px;
+
+  opacity: .82;
+
+  letter-spacing: .5px;
 }
+
+
+/* =====================================================
+   PUESTO
+   ===================================================== */
 
 .puesto {
-  text-align: center;
-  background: #faf5f0;
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 18px;
+
+  padding: 9px 18px;
+
+  border-radius: 30px;
+
+  background: rgba(255,255,255,.16);
+
+  border: 1px solid rgba(255,255,255,.24);
+
+  font-size: 14px;
 }
 
-#reader {
-  width: 100%;
-  max-width: 500px;
-  margin: auto;
+
+.puesto strong {
+
+  font-size: 16px;
+
+  letter-spacing: 1px;
 }
+
+
+/* =====================================================
+   CUERPO
+   ===================================================== */
+
+.cuerpo {
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(340px, 1fr)
+    minmax(340px, 1fr);
+
+  gap: 28px;
+
+  padding: 30px;
+}
+
+
+/* =====================================================
+   PANEL
+   ===================================================== */
+
+.panel {
+
+  background: #fcfaf8;
+
+  border: 1px solid #eadfd7;
+
+  border-radius: 22px;
+
+  padding: 24px;
+}
+
+
+.panel-titulo {
+
+  text-align: center;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  color: #6f5141;
+
+  margin-bottom: 18px;
+}
+
+
+/* =====================================================
+   ESTADO
+   ===================================================== */
 
 .estado {
-  margin-top: 18px;
-  padding: 15px;
+
+  padding: 13px 16px;
+
   border-radius: 12px;
+
   text-align: center;
-  font-weight: bold;
-  background: #f5f5f5;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  background: #f1ece8;
+
+  color: #665b54;
+
+  margin-bottom: 18px;
+
+  line-height: 1.45;
 }
 
-.exito {
-  background: #edf8f1;
-  color: #26734d;
+
+.estado.exito {
+
+  background: #eaf6ee;
+
+  color: #246b45;
 }
 
-.error {
+
+.estado.error {
+
   background: #fff0f0;
-  color: #b00020;
+
+  color: #a52424;
 }
+
+
+.estado.aviso {
+
+  background: #fff7e5;
+
+  color: #8a6500;
+}
+
+
+/* =====================================================
+   LECTOR
+   ===================================================== */
+
+#reader {
+
+  width: 100%;
+
+  max-width: 500px;
+
+  margin: auto;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+}
+
+
+/* Oculta algunos textos internos del lector
+   para mantener una interfaz limpia */
+
+#reader__dashboard_section_csr {
+
+  margin-top: 8px;
+}
+
+
+#reader video {
+
+  border-radius: 15px !important;
+
+  width: 100% !important;
+
+  height: auto !important;
+}
+
+
+/* =====================================================
+   AYUDA
+   ===================================================== */
+
+.ayuda {
+
+  text-align: center;
+
+  font-size: 13px;
+
+  color: #85766d;
+
+  line-height: 1.5;
+
+  margin-top: 16px;
+}
+
+
+/* =====================================================
+   COMPATIBILIDAD
+   ===================================================== */
+
+.compatibilidad {
+
+  text-align: center;
+
+  font-size: 12px;
+
+  color: #998c83;
+
+  margin-top: 12px;
+}
+
+
+/* =====================================================
+   RESULTADO
+   ===================================================== */
 
 .resultado {
+
   display: none;
-  margin-top: 22px;
-  padding: 22px;
-  border-radius: 18px;
-  background: #faf8f6;
-  border: 1px solid #eaded5;
+
+  margin-top: 0;
 }
 
-.resultado h2 {
+
+.resultado-titulo {
+
   text-align: center;
-  margin-top: 0;
-  color: #8b5e3c;
+
+  font-size: 22px;
+
+  font-weight: 800;
+
+  color: #6f5141;
+
+  margin: 0 0 20px;
 }
+
 
 .nombre {
+
   text-align: center;
+
   font-size: 28px;
-  font-weight: bold;
-  margin: 15px 0 5px;
+
+  font-weight: 800;
+
+  color: #443a35;
+
+  margin-bottom: 4px;
+
+  line-height: 1.2;
 }
 
+
 .id {
+
   text-align: center;
-  color: #777;
+
+  font-size: 14px;
+
+  color: #8c7d73;
+
   margin-bottom: 22px;
 }
 
-.dato {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  padding: 12px 0;
-  border-bottom: 1px solid #e8e0db;
+
+/* =====================================================
+   DATOS
+   ===================================================== */
+
+.datos {
+
+  background: white;
+
+  border-radius: 16px;
+
+  border: 1px solid #eee3dc;
+
+  overflow: hidden;
 }
 
+
+.dato {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 13px 15px;
+
+  border-bottom: 1px solid #eee5df;
+
+  font-size: 14px;
+}
+
+
 .dato:last-child {
+
   border-bottom: none;
 }
 
-.valor {
-  font-weight: bold;
+
+.dato-label {
+
+  color: #887a70;
+}
+
+
+.dato-valor {
+
+  font-weight: 700;
+
+  color: #4b4039;
+
   text-align: right;
 }
 
-.acreditada {
+
+/* =====================================================
+   ESTADO ACREDITACIÓN
+   ===================================================== */
+
+.estado-acreditacion {
+
   margin-top: 18px;
-  padding: 15px;
-  border-radius: 12px;
+
+  padding: 17px;
+
+  border-radius: 15px;
+
   text-align: center;
-  font-weight: bold;
+
+  font-weight: 800;
+
+  font-size: 15px;
+
+  line-height: 1.4;
 }
+
 
 .no-acreditada {
-  background: #edf8f1;
-  color: #26734d;
+
+  background: #eaf7ef;
+
+  color: #247044;
+
+  border: 1px solid #c9e7d4;
 }
+
 
 .ya-acreditada {
+
   background: #fff5df;
-  color: #9a6700;
+
+  color: #916500;
+
+  border: 1px solid #efd99f;
 }
+
+
+.acreditacion-exitosa {
+
+  background: #e8f8ee;
+
+  color: #17673e;
+
+  border: 1px solid #bde4cb;
+}
+
+
+/* =====================================================
+   BOTONES
+   ===================================================== */
+
+.boton {
+
+  width: 100%;
+
+  border: none;
+
+  border-radius: 14px;
+
+  padding: 17px;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform .15s ease,
+    opacity .15s ease;
+
+  margin-top: 16px;
+}
+
+
+.boton:active {
+
+  transform: scale(.98);
+}
+
 
 .boton-acreditar {
-  width: 100%;
-  margin-top: 20px;
-  padding: 17px;
-  border: none;
-  border-radius: 13px;
-  background: #8b5e3c;
+
+  background:
+    linear-gradient(
+      135deg,
+      #6f5141,
+      #8d6a55
+    );
+
   color: white;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
+
+  box-shadow:
+    0 7px 18px rgba(111,81,65,.22);
 }
+
 
 .boton-acreditar:disabled {
-  background: #aaa;
+
+  background: #aaa19b;
+
   cursor: not-allowed;
+
+  box-shadow: none;
 }
+
 
 .boton-nuevo {
-  width: 100%;
-  margin-top: 14px;
-  padding: 15px;
-  border: 1px solid #8b5e3c;
-  border-radius: 13px;
+
   background: white;
-  color: #8b5e3c;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+
+  color: #6f5141;
+
+  border: 1px solid #b99c89;
 }
 
-.exito-final {
-  background: #e9f8ef;
-  color: #17683f;
-  border: 1px solid #b9e5ca;
+
+/* =====================================================
+   PIE
+   ===================================================== */
+
+.pie {
+
+  text-align: center;
+
+  padding: 0 30px 24px;
+
+  font-size: 11px;
+
+  color: #9b8e85;
 }
 
-.error-final {
-  background: #fff0f0;
-  color: #b00020;
-  border: 1px solid #f1b8b8;
+
+/* =====================================================
+   NOTEBOOK
+   ===================================================== */
+
+@media (min-width: 900px) {
+
+  .pagina {
+
+    padding: 38px;
+  }
+
+  .encabezado {
+
+    padding-top: 34px;
+
+    padding-bottom: 28px;
+  }
+
+  .cuerpo {
+
+    min-height: 500px;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 899px) {
+
+  .cuerpo {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}
+
+
+/* =====================================================
+   CELULAR
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  .pagina {
+
+    padding: 10px;
+  }
+
+  .tarjeta-principal {
+
+    border-radius: 20px;
+  }
+
+  .encabezado {
+
+    padding: 22px 18px;
+  }
+
+  .marca {
+
+    font-size: 32px;
+
+    letter-spacing: 5px;
+  }
+
+  .submarca {
+
+    font-size: 15px;
+  }
+
+  .evento {
+
+    font-size: 12px;
+  }
+
+  .cuerpo {
+
+    padding: 15px;
+
+    gap: 15px;
+  }
+
+  .panel {
+
+    padding: 17px;
+
+    border-radius: 17px;
+  }
+
+  .nombre {
+
+    font-size: 24px;
+  }
+
+  .dato {
+
+    padding: 12px;
+
+    font-size: 13px;
+  }
+
+  .boton {
+
+    padding: 16px;
+
+    font-size: 15px;
+  }
+
+}
+
+
+/* =====================================================
+   PANTALLAS MUY PEQUEÑAS
+   ===================================================== */
+
+@media (max-width: 380px) {
+
+  .pagina {
+
+    padding: 6px;
+  }
+
+  .cuerpo {
+
+    padding: 10px;
+  }
+
+  .panel {
+
+    padding: 13px;
+  }
+
+  .marca {
+
+    font-size: 29px;
+  }
+
+}
+
+
+/* =====================================================
+   MODO DE ALTO CONTRASTE / REDUCCIÓN DE MOVIMIENTO
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .boton {
+
+    transition: none;
+  }
+
 }
 
 </style>
@@ -207,34 +781,63 @@ body {
 <body>
 
 
+<div class="pagina">
+
+
 <div class="contenedor">
 
-<div class="tarjeta">
+
+<div class="tarjeta-principal">
 
 
-<div class="logo">
+<!-- =================================================
+     ENCABEZADO
+     ================================================= -->
+
+<header class="encabezado">
+
+<div class="marca">
 RUT
 </div>
 
-
-<div class="titulo">
-Acreditación
+<div class="submarca">
+Sistema de Acreditación
 </div>
-
 
 <div class="evento">
 Congreso Mujer Bella 2026
 </div>
 
-
 <div class="puesto">
 
-<b>Puesto:</b>
-
-<span id="puesto">
-P1
+<span>
+Puesto
 </span>
 
+<strong id="puesto">
+P1
+</strong>
+
+</div>
+
+</header>
+
+
+<!-- =================================================
+     CUERPO
+     ================================================= -->
+
+<main class="cuerpo">
+
+
+<!-- =================================================
+     PANEL LECTOR
+     ================================================= -->
+
+<section class="panel">
+
+<div class="panel-titulo">
+Escanear código QR
 </div>
 
 
@@ -250,39 +853,78 @@ Preparando cámara...
 <div id="reader"></div>
 
 
+<div class="ayuda">
+
+Colocá el código QR frente a la cámara.
+<br>
+El sistema identificará automáticamente a la participante.
+
+</div>
+
+
+<div class="compatibilidad">
+
+Compatible con notebook · Android · iPhone · tablets
+
+</div>
+
+</section>
+
+
+<!-- =================================================
+     PANEL RESULTADO
+     ================================================= -->
+
+<section class="panel">
+
+
 <div
 id="resultado"
 class="resultado">
 
-<h2 id="tituloResultado">
+
+<h2
+id="tituloResultado"
+class="resultado-titulo">
+
 Participante encontrada
+
 </h2>
 
 
 <div
 id="nombre"
 class="nombre">
+
 -
+
 </div>
 
 
 <div
 id="idRut"
 class="id">
+
 -
+
 </div>
+
+
+<div class="datos">
 
 
 <div class="dato">
 
-<span>
+<span class="dato-label">
 Estado
 </span>
 
 <span
 id="estadoParticipante"
-class="valor">
+class="dato-valor">
+
 -
+
 </span>
 
 </div>
@@ -290,14 +932,16 @@ class="valor">
 
 <div class="dato">
 
-<span>
+<span class="dato-label">
 Tipo
 </span>
 
 <span
 id="tipoParticipante"
-class="valor">
+class="dato-valor">
+
 -
+
 </span>
 
 </div>
@@ -305,14 +949,16 @@ class="valor">
 
 <div class="dato">
 
-<span>
+<span class="dato-label">
 Meeting
 </span>
 
 <span
 id="meeting"
-class="valor">
+class="dato-valor">
+
 -
+
 </span>
 
 </div>
@@ -320,22 +966,26 @@ class="valor">
 
 <div class="dato">
 
-<span>
+<span class="dato-label">
 Escuelita
 </span>
 
 <span
 id="escuelita"
-class="valor">
+class="dato-valor">
+
 -
+
 </span>
+
+</div>
 
 </div>
 
 
 <div
 id="estadoAcreditacion"
-class="acreditada no-acreditada">
+class="estado-acreditacion no-acreditada">
 
 Participante no acreditada
 
@@ -344,7 +994,7 @@ Participante no acreditada
 
 <button
 id="btnAcreditar"
-class="boton-acreditar">
+class="boton boton-acreditar">
 
 ✅ ACREDITAR PARTICIPANTE
 
@@ -353,7 +1003,7 @@ class="boton-acreditar">
 
 <button
 id="btnNuevo"
-class="boton-nuevo"
+class="boton boton-nuevo"
 style="display:none;">
 
 📷 ESCANEAR OTRO QR
@@ -364,6 +1014,62 @@ style="display:none;">
 </div>
 
 
+<div
+id="mensajeInicial"
+style="
+text-align:center;
+padding:55px 20px;
+color:#9a8d84;
+">
+
+<div style="
+font-size:42px;
+margin-bottom:12px;
+">
+
+◉
+
+</div>
+
+<div style="
+font-weight:700;
+color:#76675e;
+margin-bottom:6px;
+">
+
+Esperando participante
+
+</div>
+
+<div style="
+font-size:13px;
+line-height:1.5;
+">
+
+Cuando se lea un QR,
+<br>
+los datos aparecerán aquí.
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+<div class="pie">
+
+RUT · Congreso Mujer Bella 2026
+
+</div>
+
+
+</div>
+
 </div>
 
 </div>
@@ -372,11 +1078,9 @@ style="display:none;">
 <script>
 
 
-/*
- * =====================================================
- * CONFIGURACIÓN
- * =====================================================
- */
+/* =====================================================
+   CONFIGURACIÓN
+   ===================================================== */
 
 
 const API_URL =
@@ -394,11 +1098,9 @@ let procesando = false;
 let participanteActual = null;
 
 
-/*
- * =====================================================
- * ELEMENTOS
- * =====================================================
- */
+/* =====================================================
+   ELEMENTOS
+   ===================================================== */
 
 
 const estado =
@@ -406,6 +1108,9 @@ document.getElementById("estado");
 
 const resultado =
 document.getElementById("resultado");
+
+const mensajeInicial =
+document.getElementById("mensajeInicial");
 
 const nombre =
 document.getElementById("nombre");
@@ -438,712 +1143,770 @@ const tituloResultado =
 document.getElementById("tituloResultado");
 
 
-/*
- * =====================================================
- * INICIAR ESCÁNER
- * =====================================================
- */
+/* =====================================================
+   INICIAR ESCÁNER
+   ===================================================== */
 
 
 function iniciarEscaner() {
 
+  procesando = false;
 
-procesando = false;
+  estado.textContent =
+    "Solicitando acceso a la cámara...";
 
-
-estado.textContent =
-"Solicitando acceso a la cámara...";
-
-estado.className =
-"estado";
+  estado.className =
+    "estado";
 
 
-scanner =
-new Html5Qrcode("reader");
+  scanner =
+    new Html5Qrcode("reader");
 
 
-scanner.start(
+  scanner.start(
 
-{
-facingMode: "environment"
-},
+    {
+      facingMode: {
+        ideal: "environment"
+      }
+    },
 
-{
-fps: 10,
+    {
+      fps: 10,
 
-qrbox: {
-width: 250,
-height: 250
+      qrbox: function(
+        viewfinderWidth,
+        viewfinderHeight
+      ) {
+
+        const size =
+          Math.min(
+            viewfinderWidth,
+            viewfinderHeight
+          ) * 0.68;
+
+        return {
+          width: Math.floor(size),
+          height: Math.floor(size)
+        };
+
+      },
+
+      aspectRatio: 1.0
+
+    },
+
+    qrDetectado,
+
+    errorLectura
+
+  )
+
+  .then(function() {
+
+    estado.textContent =
+      "📷 Cámara activa. Apuntá al código QR.";
+
+    estado.className =
+      "estado";
+
+
+  })
+
+  .catch(function(error) {
+
+    console.error(error);
+
+
+    estado.innerHTML =
+      "❌ No se pudo activar la cámara." +
+      "<br><br>" +
+      "Verificá que el navegador tenga permiso " +
+      "para utilizar la cámara.";
+
+    estado.className =
+      "estado error";
+
+  });
+
 }
 
-},
 
-qrDetectado,
-
-errorLectura
-
-)
-
-.then(function() {
-
-estado.textContent =
-"📷 Cámara activa. Apuntá al código QR.";
-
-estado.className =
-"estado";
-
-})
-
-.catch(function(error) {
-
-console.error(error);
-
-estado.innerHTML =
-"❌ No se pudo activar la cámara.<br><br>" +
-error;
-
-estado.className =
-"estado error";
-
-});
-
-}
-
-
-/*
- * =====================================================
- * QR DETECTADO
- * =====================================================
- */
+/* =====================================================
+   QR DETECTADO
+   ===================================================== */
 
 
 function qrDetectado(texto) {
 
+  if (procesando) {
+    return;
+  }
 
-if (procesando) {
-return;
+
+  procesando = true;
+
+
+  estado.textContent =
+    "🔎 QR leído. Consultando Rut...";
+
+  estado.className =
+    "estado";
+
+
+  detenerEscaner()
+
+    .then(function() {
+
+      consultarParticipante(texto);
+
+    });
+
 }
 
 
-procesando = true;
-
-
-estado.textContent =
-"🔎 QR leído. Consultando Rut...";
-
-estado.className =
-"estado";
-
-
-detenerEscaner()
-.then(function() {
-
-consultarParticipante(texto);
-
-});
-
-}
-
-
-/*
- * =====================================================
- * DETENER ESCÁNER
- * =====================================================
- */
+/* =====================================================
+   DETENER ESCÁNER
+   ===================================================== */
 
 
 function detenerEscaner() {
 
+  if (!scanner) {
 
-if (!scanner) {
+    return Promise.resolve();
 
-return Promise.resolve();
+  }
+
+
+  return scanner.stop()
+
+    .then(function() {
+
+      return scanner.clear();
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "Error al detener cámara:",
+        error
+      );
+
+    });
 
 }
 
 
-return scanner.stop()
-
-.then(function() {
-
-return scanner.clear();
-
-})
-
-.catch(function(error) {
-
-console.error(
-"Error al detener cámara:",
-error
-);
-
-});
-
-}
-
-
-/*
- * =====================================================
- * ERROR DE LECTURA
- * =====================================================
- */
+/* =====================================================
+   ERROR INDIVIDUAL DE LECTURA
+   ===================================================== */
 
 
 function errorLectura(error) {
 
-// Se ignoran errores individuales
-// mientras el lector busca el QR.
+  // Se ignoran los errores individuales
+  // mientras el lector busca el QR.
 
 }
 
 
-/*
- * =====================================================
- * CONSULTAR PARTICIPANTE
- * =====================================================
- */
+/* =====================================================
+   CONSULTAR PARTICIPANTE
+   ===================================================== */
 
 
 function consultarParticipante(texto) {
 
 
-const partes =
-String(texto).split("|");
+  const partes =
+    String(texto).split("|");
 
 
-if (
-partes.length < 5 ||
-partes[0] !== "RUT" ||
-partes[3] !== "ID"
-) {
+  if (
+
+    partes.length < 5 ||
+
+    partes[0] !== "RUT" ||
+
+    partes[3] !== "ID"
+
+  ) {
+
+    estado.textContent =
+      "⚠️ El QR no pertenece al sistema Rut.";
+
+    estado.className =
+      "estado aviso";
 
 
-estado.textContent =
-"⚠️ El QR no pertenece al sistema Rut.";
-
-estado.className =
-"estado error";
+    btnNuevo.style.display =
+      "block";
 
 
-btnNuevo.style.display =
-"block";
+    return;
+
+  }
 
 
-return;
+  const id =
+    String(partes[4]).trim();
+
+
+  if (!id) {
+
+    estado.textContent =
+      "❌ El QR no contiene ID de participante.";
+
+    estado.className =
+      "estado error";
+
+
+    btnNuevo.style.display =
+      "block";
+
+
+    return;
+
+  }
+
+
+  const url =
+    API_URL +
+    "?modulo=api" +
+    "&accion=buscar" +
+    "&id=" +
+    encodeURIComponent(id);
+
+
+  fetch(url)
+
+    .then(function(response) {
+
+      if (!response.ok) {
+
+        throw new Error(
+          "HTTP " + response.status
+        );
+
+      }
+
+      return response.json();
+
+    })
+
+    .then(function(data) {
+
+      mostrarParticipante(data);
+
+    })
+
+    .catch(function(error) {
+
+      console.error(
+        "Error consultando Rut:",
+        error
+      );
+
+
+      estado.innerHTML =
+        "❌ No se pudo consultar el participante." +
+        "<br><br>" +
+        error;
+
+      estado.className =
+        "estado error";
+
+
+      btnNuevo.style.display =
+        "block";
+
+    });
 
 }
 
 
-const id =
-String(partes[4]).trim();
-
-
-if (!id) {
-
-
-estado.textContent =
-"❌ El QR no contiene ID de participante.";
-
-estado.className =
-"estado error";
-
-
-btnNuevo.style.display =
-"block";
-
-
-return;
-
-}
-
-
-const url =
-API_URL +
-"?modulo=api" +
-"&accion=buscar" +
-"&id=" +
-encodeURIComponent(id);
-
-
-fetch(url)
-
-
-.then(function(response) {
-
-if (!response.ok) {
-
-throw new Error(
-"HTTP " + response.status
-);
-
-}
-
-return response.json();
-
-})
-
-
-.then(function(data) {
-
-mostrarParticipante(data);
-
-})
-
-
-.catch(function(error) {
-
-console.error(
-"Error consultando Rut:",
-error
-);
-
-
-estado.innerHTML =
-"❌ No se pudo consultar el participante.<br><br>" +
-error;
-
-
-estado.className =
-"estado error";
-
-
-btnNuevo.style.display =
-"block";
-
-});
-
-}
-
-
-/*
- * =====================================================
- * MOSTRAR PARTICIPANTE
- * =====================================================
- */
+/* =====================================================
+   MOSTRAR PARTICIPANTE
+   ===================================================== */
 
 
 function mostrarParticipante(data) {
 
 
-if (
-!data ||
-data.resultado !== "OK"
-) {
+  if (
+
+    !data ||
+
+    data.resultado !== "OK"
+
+  ) {
+
+    estado.textContent =
+      data && data.mensaje
+      ? data.mensaje
+      : "Participante no encontrada.";
 
 
-estado.textContent =
-data && data.mensaje
-? data.mensaje
-: "Participante no encontrada.";
-
-estado.className =
-"estado error";
+    estado.className =
+      "estado error";
 
 
-btnNuevo.style.display =
-"block";
+    btnNuevo.style.display =
+      "block";
 
 
-return;
+    return;
+
+  }
+
+
+  participanteActual =
+    data;
+
+
+  nombre.textContent =
+    data.nombre || "-";
+
+
+  idRut.textContent =
+    data.idRut || "-";
+
+
+  estadoParticipante.textContent =
+    data.estado || "-";
+
+
+  tipoParticipante.textContent =
+    data.tipoParticipante || "-";
+
+
+  meeting.textContent =
+    data.meeting || "-";
+
+
+  escuelita.textContent =
+    data.escuelita || "-";
+
+
+  mensajeInicial.style.display =
+    "none";
+
+
+  resultado.style.display =
+    "block";
+
+
+  /*
+   * PARTICIPANTE YA ACREDITADA
+   */
+
+  if (data.acreditada) {
+
+    tituloResultado.textContent =
+      "⚠️ PARTICIPANTE YA ACREDITADA";
+
+
+    estadoAcreditacion.textContent =
+      "⚠️ ESTA PARTICIPANTE YA FUE ACREDITADA";
+
+
+    estadoAcreditacion.className =
+      "estado-acreditacion ya-acreditada";
+
+
+    btnAcreditar.style.display =
+      "none";
+
+
+  }
+
+  /*
+   * PARTICIPANTE SIN ACREDITAR
+   */
+
+  else {
+
+    tituloResultado.textContent =
+      "Participante encontrada";
+
+
+    estadoAcreditacion.textContent =
+      "✅ PARTICIPANTE NO ACREDITADA";
+
+
+    estadoAcreditacion.className =
+      "estado-acreditacion no-acreditada";
+
+
+    btnAcreditar.style.display =
+      "block";
+
+  }
+
+
+  estado.textContent =
+    "✅ Participante encontrada";
+
+  estado.className =
+    "estado exito";
+
+
+  btnNuevo.style.display =
+    "block";
 
 }
 
 
-participanteActual =
-data;
-
-
-nombre.textContent =
-data.nombre || "-";
-
-
-idRut.textContent =
-data.idRut || "-";
-
-
-estadoParticipante.textContent =
-data.estado || "-";
-
-
-tipoParticipante.textContent =
-data.tipoParticipante || "-";
-
-
-meeting.textContent =
-data.meeting || "-";
-
-
-escuelita.textContent =
-data.escuelita || "-";
-
-
-if (data.acreditada) {
-
-
-estadoAcreditacion.textContent =
-"⚠️ PARTICIPANTE YA ACREDITADA";
-
-
-estadoAcreditacion.className =
-"acreditada ya-acreditada";
-
-
-btnAcreditar.style.display =
-"none";
-
-
-}
-
-else {
-
-
-estadoAcreditacion.textContent =
-"✅ Participante no acreditada";
-
-
-estadoAcreditacion.className =
-"acreditada no-acreditada";
-
-
-btnAcreditar.style.display =
-"block";
-
-}
-
-
-resultado.style.display =
-"block";
-
-
-estado.textContent =
-"✅ Participante encontrada";
-
-estado.className =
-"estado exito";
-
-
-btnNuevo.style.display =
-"block";
-
-}
-
-
-/*
- * =====================================================
- * ACREDITAR PARTICIPANTE
- * =====================================================
- */
+/* =====================================================
+   ACREDITAR PARTICIPANTE
+   ===================================================== */
 
 
 btnAcreditar.addEventListener(
-"click",
-function() {
+
+  "click",
+
+  function() {
 
 
-if (
-!participanteActual ||
-!participanteActual.idRut
-) {
+    if (
 
-return;
+      !participanteActual ||
 
-}
+      !participanteActual.idRut
 
+    ) {
 
-btnAcreditar.disabled =
-true;
+      return;
 
-
-btnAcreditar.textContent =
-"⏳ ACREDITANDO...";
+    }
 
 
-estado.textContent =
-"Registrando acreditación...";
-
-estado.className =
-"estado";
+    btnAcreditar.disabled =
+      true;
 
 
-const id =
-participanteActual.idRut;
+    btnAcreditar.textContent =
+      "⏳ ACREDITANDO...";
 
 
-const url =
-API_URL +
-"?modulo=api" +
-"&accion=acreditar" +
-"&id=" +
-encodeURIComponent(id) +
-"&puesto=" +
-encodeURIComponent(PUESTO);
+    estado.textContent =
+      "Registrando acreditación...";
 
 
-fetch(url)
+    estado.className =
+      "estado";
 
 
-.then(function(response) {
+    const id =
+      participanteActual.idRut;
 
-if (!response.ok) {
 
-throw new Error(
-"HTTP " + response.status
+    const url =
+      API_URL +
+      "?modulo=api" +
+      "&accion=acreditar" +
+      "&id=" +
+      encodeURIComponent(id) +
+      "&puesto=" +
+      encodeURIComponent(PUESTO);
+
+
+    fetch(url)
+
+      .then(function(response) {
+
+        if (!response.ok) {
+
+          throw new Error(
+            "HTTP " + response.status
+          );
+
+        }
+
+        return response.json();
+
+      })
+
+      .then(function(data) {
+
+        mostrarResultadoAcreditacion(
+          data
+        );
+
+      })
+
+      .catch(function(error) {
+
+        console.error(
+          "Error acreditando:",
+          error
+        );
+
+
+        btnAcreditar.disabled =
+          false;
+
+
+        btnAcreditar.textContent =
+          "✅ ACREDITAR PARTICIPANTE";
+
+
+        estado.innerHTML =
+          "❌ No se pudo completar la acreditación." +
+          "<br><br>" +
+          error;
+
+
+        estado.className =
+          "estado error";
+
+      });
+
+  }
+
 );
 
-}
 
-return response.json();
-
-})
-
-
-.then(function(data) {
-
-mostrarResultadoAcreditacion(
-data
-);
-
-})
-
-
-.catch(function(error) {
-
-console.error(
-"Error acreditando:",
-error
-);
-
-
-btnAcreditar.disabled =
-false;
-
-btnAcreditar.textContent =
-"✅ ACREDITAR PARTICIPANTE";
-
-
-estado.innerHTML =
-"❌ No se pudo completar la acreditación.<br><br>" +
-error;
-
-estado.className =
-"estado error";
-
-});
-
-});
-
-
-/*
- * =====================================================
- * MOSTRAR RESULTADO ACREDITACIÓN
- * =====================================================
- */
+/* =====================================================
+   RESULTADO DE ACREDITACIÓN
+   ===================================================== */
 
 
 function mostrarResultadoAcreditacion(data) {
 
 
-if (
-data.resultado === "ACREDITADA"
-) {
+  if (
+
+    data.resultado ===
+    "ACREDITADA"
+
+  ) {
 
 
-tituloResultado.textContent =
-"✅ ACREDITACIÓN EXITOSA";
+    tituloResultado.textContent =
+      "✅ ACREDITACIÓN EXITOSA";
 
 
-estadoAcreditacion.textContent =
-"✅ PARTICIPANTE ACREDITADA";
+    estadoAcreditacion.textContent =
+      "✅ PARTICIPANTE ACREDITADA";
 
 
-estadoAcreditacion.className =
-"acreditada exito-final";
+    estadoAcreditacion.className =
+      "estado-acreditacion acreditacion-exitosa";
 
 
-btnAcreditar.style.display =
-"none";
+    btnAcreditar.style.display =
+      "none";
 
 
-btnNuevo.style.display =
-"block";
+    btnNuevo.style.display =
+      "block";
 
 
-estado.innerHTML =
-"✅ Acreditación registrada correctamente.";
-
-estado.className =
-"estado exito";
+    estado.innerHTML =
+      "✅ Acreditación registrada correctamente.";
 
 
-return;
+    estado.className =
+      "estado exito";
+
+
+    /*
+     * Actualizamos el estado local.
+     * Esto evita que la interfaz pueda
+     * mostrar nuevamente el botón.
+     */
+
+    participanteActual.acreditada =
+      true;
+
+
+    return;
+
+  }
+
+
+  if (
+
+    data.resultado ===
+    "YA_ACREDITADA"
+
+  ) {
+
+
+    tituloResultado.textContent =
+      "⚠️ PARTICIPANTE YA ACREDITADA";
+
+
+    estadoAcreditacion.textContent =
+      "⚠️ ESTA PARTICIPANTE YA FUE ACREDITADA";
+
+
+    estadoAcreditacion.className =
+      "estado-acreditacion ya-acreditada";
+
+
+    btnAcreditar.style.display =
+      "none";
+
+
+    btnNuevo.style.display =
+      "block";
+
+
+    estado.innerHTML =
+      "⚠️ La participante ya estaba acreditada.";
+
+
+    estado.className =
+      "estado aviso";
+
+
+    return;
+
+  }
+
+
+  btnAcreditar.disabled =
+    false;
+
+
+  btnAcreditar.textContent =
+    "✅ ACREDITAR PARTICIPANTE";
+
+
+  estado.innerHTML =
+    "❌ " +
+    (
+      data.mensaje ||
+      "No se pudo acreditar."
+    );
+
+
+  estado.className =
+    "estado error";
 
 }
 
 
-if (
-data.resultado === "YA_ACREDITADA"
-) {
-
-
-tituloResultado.textContent =
-"⚠️ PARTICIPANTE YA ACREDITADA";
-
-
-estadoAcreditacion.textContent =
-"⚠️ ESTA PARTICIPANTE YA FUE ACREDITADA";
-
-
-estadoAcreditacion.className =
-"acreditada ya-acreditada";
-
-
-btnAcreditar.style.display =
-"none";
-
-
-btnNuevo.style.display =
-"block";
-
-
-estado.innerHTML =
-"⚠️ La participante ya estaba acreditada.";
-
-estado.className =
-"estado";
-
-
-return;
-
-}
-
-
-btnAcreditar.disabled =
-false;
-
-btnAcreditar.textContent =
-"✅ ACREDITAR PARTICIPANTE";
-
-
-estado.innerHTML =
-"❌ " +
-(
-data.mensaje ||
-"No se pudo acreditar."
-);
-
-estado.className =
-"estado error";
-
-}
-
-
-/*
- * =====================================================
- * NUEVO ESCANEO
- * =====================================================
- */
+/* =====================================================
+   NUEVO ESCANEO
+   ===================================================== */
 
 
 btnNuevo.addEventListener(
-"click",
-function() {
+
+  "click",
+
+  function() {
 
 
-resultado.style.display =
-"none";
+    resultado.style.display =
+      "none";
 
 
-btnNuevo.style.display =
-"none";
+    mensajeInicial.style.display =
+      "block";
 
 
-btnAcreditar.style.display =
-"block";
+    btnNuevo.style.display =
+      "none";
 
 
-btnAcreditar.disabled =
-false;
+    btnAcreditar.style.display =
+      "block";
 
 
-btnAcreditar.textContent =
-"✅ ACREDITAR PARTICIPANTE";
+    btnAcreditar.disabled =
+      false;
 
 
-tituloResultado.textContent =
-"Participante encontrada";
+    btnAcreditar.textContent =
+      "✅ ACREDITAR PARTICIPANTE";
 
 
-nombre.textContent =
-"-";
+    tituloResultado.textContent =
+      "Participante encontrada";
 
 
-idRut.textContent =
-"-";
+    nombre.textContent =
+      "-";
 
 
-estadoParticipante.textContent =
-"-";
+    idRut.textContent =
+      "-";
 
 
-tipoParticipante.textContent =
-"-";
+    estadoParticipante.textContent =
+      "-";
 
 
-meeting.textContent =
-"-";
+    tipoParticipante.textContent =
+      "-";
 
 
-escuelita.textContent =
-"-";
+    meeting.textContent =
+      "-";
 
 
-estadoAcreditacion.textContent =
-"Participante no acreditada";
+    escuelita.textContent =
+      "-";
 
 
-estadoAcreditacion.className =
-"acreditada no-acreditada";
+    estadoAcreditacion.textContent =
+      "Participante no acreditada";
 
 
-participanteActual =
-null;
+    estadoAcreditacion.className =
+      "estado-acreditacion no-acreditada";
 
 
-procesando =
-false;
+    participanteActual =
+      null;
 
 
-estado.textContent =
-"Preparando cámara...";
-
-estado.className =
-"estado";
+    procesando =
+      false;
 
 
-scanner =
-null;
+    estado.textContent =
+      "Preparando cámara...";
 
 
-iniciarEscaner();
+    estado.className =
+      "estado";
 
-});
+
+    scanner =
+      null;
 
 
-/*
- * =====================================================
- * INICIO
- * =====================================================
- */
+    iniciarEscaner();
+
+  }
+
+);
+
+
+/* =====================================================
+   INICIO
+   ===================================================== */
 
 
 window.addEventListener(
-"load",
-function() {
 
-iniciarEscaner();
+  "load",
 
-});
+  function() {
 
+    iniciarEscaner();
+
+  }
+
+);
 
 </script>
 
