@@ -156,20 +156,47 @@ body {
   color: #9a6700;
 }
 
-button {
+.boton-acreditar {
   width: 100%;
   margin-top: 20px;
-  padding: 15px;
+  padding: 17px;
   border: none;
   border-radius: 13px;
   background: #8b5e3c;
   color: white;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
+  cursor: pointer;
 }
 
-button:active {
-  transform: scale(.98);
+.boton-acreditar:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.boton-nuevo {
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px;
+  border: 1px solid #8b5e3c;
+  border-radius: 13px;
+  background: white;
+  color: #8b5e3c;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.exito-final {
+  background: #e9f8ef;
+  color: #17683f;
+  border: 1px solid #b9e5ca;
+}
+
+.error-final {
+  background: #fff0f0;
+  color: #b00020;
+  border: 1px solid #f1b8b8;
 }
 
 </style>
@@ -227,7 +254,7 @@ Preparando cámara...
 id="resultado"
 class="resultado">
 
-<h2>
+<h2 id="tituloResultado">
 Participante encontrada
 </h2>
 
@@ -315,16 +342,26 @@ Participante no acreditada
 </div>
 
 
-</div>
+<button
+id="btnAcreditar"
+class="boton-acreditar">
+
+✅ ACREDITAR PARTICIPANTE
+
+</button>
 
 
 <button
 id="btnNuevo"
+class="boton-nuevo"
 style="display:none;">
 
-📷 Escanear otro QR
+📷 ESCANEAR OTRO QR
 
 </button>
+
+
+</div>
 
 
 </div>
@@ -346,9 +383,22 @@ const API_URL =
 "https://script.google.com/macros/s/AKfycby93BZkH7rTmZqHv6UFoNmOop6L9VGCZChI8z-3XDAjjaHlqOSYRZaWnUSGxhBnX2q5Vg/exec";
 
 
+const PUESTO =
+"P1";
+
+
 let scanner = null;
 
 let procesando = false;
+
+let participanteActual = null;
+
+
+/*
+ * =====================================================
+ * ELEMENTOS
+ * =====================================================
+ */
 
 
 const estado =
@@ -378,8 +428,14 @@ document.getElementById("escuelita");
 const estadoAcreditacion =
 document.getElementById("estadoAcreditacion");
 
+const btnAcreditar =
+document.getElementById("btnAcreditar");
+
 const btnNuevo =
 document.getElementById("btnNuevo");
+
+const tituloResultado =
+document.getElementById("tituloResultado");
 
 
 /*
@@ -535,16 +591,15 @@ error
 
 function errorLectura(error) {
 
-// No mostramos errores individuales.
-// El lector continúa buscando.
-
+// Se ignoran errores individuales
+// mientras el lector busca el QR.
 
 }
 
 
 /*
  * =====================================================
- * PROCESAR QR
+ * CONSULTAR PARTICIPANTE
  * =====================================================
  */
 
@@ -694,6 +749,10 @@ return;
 }
 
 
+participanteActual =
+data;
+
+
 nombre.textContent =
 data.nombre || "-";
 
@@ -722,11 +781,15 @@ if (data.acreditada) {
 
 
 estadoAcreditacion.textContent =
-"⚠️ Participante ya acreditada";
+"⚠️ PARTICIPANTE YA ACREDITADA";
 
 
 estadoAcreditacion.className =
 "acreditada ya-acreditada";
+
+
+btnAcreditar.style.display =
+"none";
 
 
 }
@@ -740,6 +803,10 @@ estadoAcreditacion.textContent =
 
 estadoAcreditacion.className =
 "acreditada no-acreditada";
+
+
+btnAcreditar.style.display =
+"block";
 
 }
 
@@ -763,6 +830,215 @@ btnNuevo.style.display =
 
 /*
  * =====================================================
+ * ACREDITAR PARTICIPANTE
+ * =====================================================
+ */
+
+
+btnAcreditar.addEventListener(
+"click",
+function() {
+
+
+if (
+!participanteActual ||
+!participanteActual.idRut
+) {
+
+return;
+
+}
+
+
+btnAcreditar.disabled =
+true;
+
+
+btnAcreditar.textContent =
+"⏳ ACREDITANDO...";
+
+
+estado.textContent =
+"Registrando acreditación...";
+
+estado.className =
+"estado";
+
+
+const id =
+participanteActual.idRut;
+
+
+const url =
+API_URL +
+"?modulo=api" +
+"&accion=acreditar" +
+"&id=" +
+encodeURIComponent(id) +
+"&puesto=" +
+encodeURIComponent(PUESTO);
+
+
+fetch(url)
+
+
+.then(function(response) {
+
+if (!response.ok) {
+
+throw new Error(
+"HTTP " + response.status
+);
+
+}
+
+return response.json();
+
+})
+
+
+.then(function(data) {
+
+mostrarResultadoAcreditacion(
+data
+);
+
+})
+
+
+.catch(function(error) {
+
+console.error(
+"Error acreditando:",
+error
+);
+
+
+btnAcreditar.disabled =
+false;
+
+btnAcreditar.textContent =
+"✅ ACREDITAR PARTICIPANTE";
+
+
+estado.innerHTML =
+"❌ No se pudo completar la acreditación.<br><br>" +
+error;
+
+estado.className =
+"estado error";
+
+});
+
+});
+
+
+/*
+ * =====================================================
+ * MOSTRAR RESULTADO ACREDITACIÓN
+ * =====================================================
+ */
+
+
+function mostrarResultadoAcreditacion(data) {
+
+
+if (
+data.resultado === "ACREDITADA"
+) {
+
+
+tituloResultado.textContent =
+"✅ ACREDITACIÓN EXITOSA";
+
+
+estadoAcreditacion.textContent =
+"✅ PARTICIPANTE ACREDITADA";
+
+
+estadoAcreditacion.className =
+"acreditada exito-final";
+
+
+btnAcreditar.style.display =
+"none";
+
+
+btnNuevo.style.display =
+"block";
+
+
+estado.innerHTML =
+"✅ Acreditación registrada correctamente.";
+
+estado.className =
+"estado exito";
+
+
+return;
+
+}
+
+
+if (
+data.resultado === "YA_ACREDITADA"
+) {
+
+
+tituloResultado.textContent =
+"⚠️ PARTICIPANTE YA ACREDITADA";
+
+
+estadoAcreditacion.textContent =
+"⚠️ ESTA PARTICIPANTE YA FUE ACREDITADA";
+
+
+estadoAcreditacion.className =
+"acreditada ya-acreditada";
+
+
+btnAcreditar.style.display =
+"none";
+
+
+btnNuevo.style.display =
+"block";
+
+
+estado.innerHTML =
+"⚠️ La participante ya estaba acreditada.";
+
+estado.className =
+"estado";
+
+
+return;
+
+}
+
+
+btnAcreditar.disabled =
+false;
+
+btnAcreditar.textContent =
+"✅ ACREDITAR PARTICIPANTE";
+
+
+estado.innerHTML =
+"❌ " +
+(
+data.mensaje ||
+"No se pudo acreditar."
+);
+
+estado.className =
+"estado error";
+
+}
+
+
+/*
+ * =====================================================
  * NUEVO ESCANEO
  * =====================================================
  */
@@ -779,6 +1055,22 @@ resultado.style.display =
 
 btnNuevo.style.display =
 "none";
+
+
+btnAcreditar.style.display =
+"block";
+
+
+btnAcreditar.disabled =
+false;
+
+
+btnAcreditar.textContent =
+"✅ ACREDITAR PARTICIPANTE";
+
+
+tituloResultado.textContent =
+"Participante encontrada";
 
 
 nombre.textContent =
@@ -813,6 +1105,14 @@ estadoAcreditacion.className =
 "acreditada no-acreditada";
 
 
+participanteActual =
+null;
+
+
+procesando =
+false;
+
+
 estado.textContent =
 "Preparando cámara...";
 
@@ -820,7 +1120,8 @@ estado.className =
 "estado";
 
 
-scanner = null;
+scanner =
+null;
 
 
 iniciarEscaner();
