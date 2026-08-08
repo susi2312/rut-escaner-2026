@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>RUT - Acreditación</title>
+
+<script src="https://unpkg.com/html5-qrcode"
+        type="text/javascript"></script>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  background: #f4ece7;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.contenedor {
+  max-width: 620px;
+  margin: auto;
+}
+
+.tarjeta {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.14);
+}
+
+.logo {
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #8b5e3c;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 26px;
+  margin-top: 5px;
+  color: #444;
+}
+
+.evento {
+  text-align: center;
+  color: #777;
+  margin-bottom: 22px;
+}
+
+.puesto {
+  text-align: center;
+  background: #faf5f0;
+  padding: 12px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+#reader {
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.estado {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+  background: #f5f5f5;
+}
+
+.exito {
+  background: #edf8f1;
+  color: #26734d;
+}
+
+.error {
+  background: #fff0f0;
+  color: #b00020;
+}
+
+.resultado {
+  display: none;
+  margin-top: 22px;
+  padding: 22px;
+  border-radius: 18px;
+  background: #faf8f6;
+  border: 1px solid #eaded5;
+}
+
+.resultado h2 {
+  text-align: center;
+  margin-top: 0;
+  color: #8b5e3c;
+}
+
+.nombre {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 15px 0 5px;
+}
+
+.id {
+  text-align: center;
+  color: #777;
+  margin-bottom: 22px;
+}
+
+.dato {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e8e0db;
+}
+
+.dato:last-child {
+  border-bottom: none;
+}
+
+.valor {
+  font-weight: bold;
+  text-align: right;
+}
+
+.acreditada {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.no-acreditada {
+  background: #edf8f1;
+  color: #26734d;
+}
+
+.ya-acreditada {
+  background: #fff5df;
+  color: #9a6700;
+}
+
+.boton-acreditar {
+  width: 100%;
+  margin-top: 20px;
+  padding: 17px;
+  border: none;
+  border-radius: 13px;
+  background: #8b5e3c;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.boton-acreditar:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+.boton-nuevo {
+  width: 100%;
+  margin-top: 14px;
+  padding: 15px;
+  border: 1px solid #8b5e3c;
+  border-radius: 13px;
+  background: white;
+  color: #8b5e3c;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.exito-final {
+  background: #e9f8ef;
+  color: #17683f;
+  border: 1px solid #b9e5ca;
+}
+
+.error-final {
+  background: #fff0f0;
+  color: #b00020;
+  border: 1px solid #f1b8b8;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="contenedor">
+
+<div class="tarjeta">
+
+
+<div class="logo">
+RUT
+</div>
+
+
+<div class="titulo">
+Acreditación
+</div>
+
+
+<div class="evento">
+Congreso Mujer Bella 2026
+</div>
+
+
+<div class="puesto">
+
+<b>Puesto:</b>
+
+<span id="puesto">
+P1
+</span>
+
+</div>
+
+
+<div
+id="estado"
+class="estado">
+
+Preparando cámara...
+
+</div>
+
+
+<div id="reader"></div>
+
+
+<div
+id="resultado"
+class="resultado">
+
+<h2 id="tituloResultado">
+Participante encontrada
+</h2>
+
+
+<div
+id="nombre"
+class="nombre">
+-
+</div>
+
+
+<div
+id="idRut"
+class="id">
+-
+</div>
+
+
+<div class="dato">
+
+<span>
+Estado
+</span>
+
+<span
+id="estadoParticipante"
+class="valor">
+-
+</span>
+
+</div>
+
+
+<div class="dato">
+
+<span>
+Tipo
+</span>
+
+<span
+id="tipoParticipante"
+class="valor">
+-
+</span>
+
+</div>
+
+
+<div class="dato">
+
+<span>
+Meeting
+</span>
+
+<span
+id="meeting"
+class="valor">
+-
+</span>
+
+</div>
+
+
+<div class="dato">
+
+<span>
+Escuelita
+</span>
+
+<span
+id="escuelita"
+class="valor">
+-
+</span>
+
+</div>
+
+
+<div
+id="estadoAcreditacion"
+class="acreditada no-acreditada">
+
+Participante no acreditada
+
+</div>
+
+
+<button
+id="btnAcreditar"
+class="boton-acreditar">
+
+✅ ACREDITAR PARTICIPANTE
+
+</button>
+
+
+<button
+id="btnNuevo"
+class="boton-nuevo"
+style="display:none;">
+
+📷 ESCANEAR OTRO QR
+
+</button>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/*
+ * =====================================================
+ * CONFIGURACIÓN
+ * =====================================================
+ */
+
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycby93BZkH7rTmZqHv6UFoNmOop6L9VGCZChI8z-3XDAjjaHlqOSYRZaWnUSGxhBnX2q5Vg/exec";
+
+
+const PUESTO =
+"P1";
+
+
+let scanner = null;
+
+let procesando = false;
+
+let participanteActual = null;
+
+
+/*
+ * =====================================================
+ * ELEMENTOS
+ * =====================================================
+ */
+
+
+const estado =
+document.getElementById("estado");
+
+const resultado =
+document.getElementById("resultado");
+
+const nombre =
+document.getElementById("nombre");
+
+const idRut =
+document.getElementById("idRut");
+
+const estadoParticipante =
+document.getElementById("estadoParticipante");
+
+const tipoParticipante =
+document.getElementById("tipoParticipante");
+
+const meeting =
+document.getElementById("meeting");
+
+const escuelita =
+document.getElementById("escuelita");
+
+const estadoAcreditacion =
+document.getElementById("estadoAcreditacion");
+
+const btnAcreditar =
+document.getElementById("btnAcreditar");
+
+const btnNuevo =
+document.getElementById("btnNuevo");
+
+const tituloResultado =
+document.getElementById("tituloResultado");
+
+
+/*
+ * =====================================================
+ * INICIAR ESCÁNER
+ * =====================================================
+ */
+
+
+function iniciarEscaner() {
+
+
+procesando = false;
+
+
+estado.textContent =
+"Solicitando acceso a la cámara...";
+
+estado.className =
+"estado";
+
+
+scanner =
+new Html5Qrcode("reader");
+
+
+scanner.start(
+
+{
+facingMode: "environment"
+},
+
+{
+fps: 10,
+
+qrbox: {
+width: 250,
+height: 250
+}
+
+},
+
+qrDetectado,
+
+errorLectura
+
+)
+
+.then(function() {
+
+estado.textContent =
+"📷 Cámara activa. Apuntá al código QR.";
+
+estado.className =
+"estado";
+
+})
+
+.catch(function(error) {
+
+console.error(error);
+
+estado.innerHTML =
+"❌ No se pudo activar la cámara.<br><br>" +
+error;
+
+estado.className =
+"estado error";
+
+});
+
+}
+
+
+/*
+ * =====================================================
+ * QR DETECTADO
+ * =====================================================
+ */
+
+
+function qrDetectado(texto) {
+
+
+if (procesando) {
+return;
+}
+
+
+procesando = true;
+
+
+estado.textContent =
+"🔎 QR leído. Consultando Rut...";
+
+estado.className =
+"estado";
+
+
+detenerEscaner()
+.then(function() {
+
+consultarParticipante(texto);
+
+});
+
+}
+
+
+/*
+ * =====================================================
+ * DETENER ESCÁNER
+ * =====================================================
+ */
+
+
+function detenerEscaner() {
+
+
+if (!scanner) {
+
+return Promise.resolve();
+
+}
+
+
+return scanner.stop()
+
+.then(function() {
+
+return scanner.clear();
+
+})
+
+.catch(function(error) {
+
+console.error(
+"Error al detener cámara:",
+error
+);
+
+});
+
+}
+
+
+/*
+ * =====================================================
+ * ERROR DE LECTURA
+ * =====================================================
+ */
+
+
+function errorLectura(error) {
+
+// Se ignoran errores individuales
+// mientras el lector busca el QR.
+
+}
+
+
+/*
+ * =====================================================
+ * CONSULTAR PARTICIPANTE
+ * =====================================================
+ */
+
+
+function consultarParticipante(texto) {
+
+
+const partes =
+String(texto).split("|");
+
+
+if (
+partes.length < 5 ||
+partes[0] !== "RUT" ||
+partes[3] !== "ID"
+) {
+
+
+estado.textContent =
+"⚠️ El QR no pertenece al sistema Rut.";
+
+estado.className =
+"estado error";
+
+
+btnNuevo.style.display =
+"block";
+
+
+return;
+
+}
+
+
+const id =
+String(partes[4]).trim();
+
+
+if (!id) {
+
+
+estado.textContent =
+"❌ El QR no contiene ID de participante.";
+
+estado.className =
+"estado error";
+
+
+btnNuevo.style.display =
+"block";
+
+
+return;
+
+}
+
+
+const url =
+API_URL +
+"?modulo=api" +
+"&accion=buscar" +
+"&id=" +
+encodeURIComponent(id);
+
+
+fetch(url)
+
+
+.then(function(response) {
+
+if (!response.ok) {
+
+throw new Error(
+"HTTP " + response.status
+);
+
+}
+
+return response.json();
+
+})
+
+
+.then(function(data) {
+
+mostrarParticipante(data);
+
+})
+
+
+.catch(function(error) {
+
+console.error(
+"Error consultando Rut:",
+error
+);
+
+
+estado.innerHTML =
+"❌ No se pudo consultar el participante.<br><br>" +
+error;
+
+
+estado.className =
+"estado error";
+
+
+btnNuevo.style.display =
+"block";
+
+});
+
+}
+
+
+/*
+ * =====================================================
+ * MOSTRAR PARTICIPANTE
+ * =====================================================
+ */
+
+
+function mostrarParticipante(data) {
+
+
+if (
+!data ||
+data.resultado !== "OK"
+) {
+
+
+estado.textContent =
+data && data.mensaje
+? data.mensaje
+: "Participante no encontrada.";
+
+estado.className =
+"estado error";
+
+
+btnNuevo.style.display =
+"block";
+
+
+return;
+
+}
+
+
+participanteActual =
+data;
+
+
+nombre.textContent =
+data.nombre || "-";
+
+
+idRut.textContent =
+data.idRut || "-";
+
+
+estadoParticipante.textContent =
+data.estado || "-";
+
+
+tipoParticipante.textContent =
+data.tipoParticipante || "-";
+
+
+meeting.textContent =
+data.meeting || "-";
+
+
+escuelita.textContent =
+data.escuelita || "-";
+
+
+if (data.acreditada) {
+
+
+estadoAcreditacion.textContent =
+"⚠️ PARTICIPANTE YA ACREDITADA";
+
+
+estadoAcreditacion.className =
+"acreditada ya-acreditada";
+
+
+btnAcreditar.style.display =
+"none";
+
+
+}
+
+else {
+
+
+estadoAcreditacion.textContent =
+"✅ Participante no acreditada";
+
+
+estadoAcreditacion.className =
+"acreditada no-acreditada";
+
+
+btnAcreditar.style.display =
+"block";
+
+}
+
+
+resultado.style.display =
+"block";
+
+
+estado.textContent =
+"✅ Participante encontrada";
+
+estado.className =
+"estado exito";
+
+
+btnNuevo.style.display =
+"block";
+
+}
+
+
+/*
+ * =====================================================
+ * ACREDITAR PARTICIPANTE
+ * =====================================================
+ */
+
+
+btnAcreditar.addEventListener(
+"click",
+function() {
+
+
+if (
+!participanteActual ||
+!participanteActual.idRut
+) {
+
+return;
+
+}
+
+
+btnAcreditar.disabled =
+true;
+
+
+btnAcreditar.textContent =
+"⏳ ACREDITANDO...";
+
+
+estado.textContent =
+"Registrando acreditación...";
+
+estado.className =
+"estado";
+
+
+const id =
+participanteActual.idRut;
+
+
+const url =
+API_URL +
+"?modulo=api" +
+"&accion=acreditar" +
+"&id=" +
+encodeURIComponent(id) +
+"&puesto=" +
+encodeURIComponent(PUESTO);
+
+
+fetch(url)
+
+
+.then(function(response) {
+
+if (!response.ok) {
+
+throw new Error(
+"HTTP " + response.status
+);
+
+}
+
+return response.json();
+
+})
+
+
+.then(function(data) {
+
+mostrarResultadoAcreditacion(
+data
+);
+
+})
+
+
+.catch(function(error) {
+
+console.error(
+"Error acreditando:",
+error
+);
+
+
+btnAcreditar.disabled =
+false;
+
+btnAcreditar.textContent =
+"✅ ACREDITAR PARTICIPANTE";
+
+
+estado.innerHTML =
+"❌ No se pudo completar la acreditación.<br><br>" +
+error;
+
+estado.className =
+"estado error";
+
+});
+
+});
+
+
+/*
+ * =====================================================
+ * MOSTRAR RESULTADO ACREDITACIÓN
+ * =====================================================
+ */
+
+
+function mostrarResultadoAcreditacion(data) {
+
+
+if (
+data.resultado === "ACREDITADA"
+) {
+
+
+tituloResultado.textContent =
+"✅ ACREDITACIÓN EXITOSA";
+
+
+estadoAcreditacion.textContent =
+"✅ PARTICIPANTE ACREDITADA";
+
+
+estadoAcreditacion.className =
+"acreditada exito-final";
+
+
+btnAcreditar.style.display =
+"none";
+
+
+btnNuevo.style.display =
+"block";
+
+
+estado.innerHTML =
+"✅ Acreditación registrada correctamente.";
+
+estado.className =
+"estado exito";
+
+
+return;
+
+}
+
+
+if (
+data.resultado === "YA_ACREDITADA"
+) {
+
+
+tituloResultado.textContent =
+"⚠️ PARTICIPANTE YA ACREDITADA";
+
+
+estadoAcreditacion.textContent =
+"⚠️ ESTA PARTICIPANTE YA FUE ACREDITADA";
+
+
+estadoAcreditacion.className =
+"acreditada ya-acreditada";
+
+
+btnAcreditar.style.display =
+"none";
+
+
+btnNuevo.style.display =
+"block";
+
+
+estado.innerHTML =
+"⚠️ La participante ya estaba acreditada.";
+
+estado.className =
+"estado";
+
+
+return;
+
+}
+
+
+btnAcreditar.disabled =
+false;
+
+btnAcreditar.textContent =
+"✅ ACREDITAR PARTICIPANTE";
+
+
+estado.innerHTML =
+"❌ " +
+(
+data.mensaje ||
+"No se pudo acreditar."
+);
+
+estado.className =
+"estado error";
+
+}
+
+
+/*
+ * =====================================================
+ * NUEVO ESCANEO
+ * =====================================================
+ */
+
+
+btnNuevo.addEventListener(
+"click",
+function() {
+
+
+resultado.style.display =
+"none";
+
+
+btnNuevo.style.display =
+"none";
+
+
+btnAcreditar.style.display =
+"block";
+
+
+btnAcreditar.disabled =
+false;
+
+
+btnAcreditar.textContent =
+"✅ ACREDITAR PARTICIPANTE";
+
+
+tituloResultado.textContent =
+"Participante encontrada";
+
+
+nombre.textContent =
+"-";
+
+
+idRut.textContent =
+"-";
+
+
+estadoParticipante.textContent =
+"-";
+
+
+tipoParticipante.textContent =
+"-";
+
+
+meeting.textContent =
+"-";
+
+
+escuelita.textContent =
+"-";
+
+
+estadoAcreditacion.textContent =
+"Participante no acreditada";
+
+
+estadoAcreditacion.className =
+"acreditada no-acreditada";
+
+
+participanteActual =
+null;
+
+
+procesando =
+false;
+
+
+estado.textContent =
+"Preparando cámara...";
+
+estado.className =
+"estado";
+
+
+scanner =
+null;
+
+
+iniciarEscaner();
+
+});
+
+
+/*
+ * =====================================================
+ * INICIO
+ * =====================================================
+ */
+
+
+window.addEventListener(
+"load",
+function() {
+
+iniciarEscaner();
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
