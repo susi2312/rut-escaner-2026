@@ -663,7 +663,7 @@ Puesto
 </span>
 
 <strong id="puesto">
-P1
+...
 </strong>
 
 </div>
@@ -888,10 +888,28 @@ RUT · Congreso Mujer Bella 2026
 <script>
 
 const API_URL =
-"https://script.google.com/macros/s/AKfycby93BZkH7rTmZqHv6UFoNmOop6L9VGCZChI8z-3XDAjjaHlqOSYRZaWnUSGxhBnX2q5Vg/exec";
+"https://script.google.com/macros/s/AKfycbzFJ0Bo2FCtgIW6C2hd2c-1r8qQQvxymCMZmRPvMSYbx92loBDRCcE3p5jZmHjtguC0lg/exec";
+
+const parametrosURL =
+  new URLSearchParams(
+    window.location.search
+  );
 
 const PUESTO =
-"P1";
+  String(
+    parametrosURL.get("puesto") || ""
+  )
+  .trim()
+  .toUpperCase();
+
+const PUESTOS_VALIDOS = [
+  "P1",
+  "P2",
+  "P3",
+  "P4",
+  "P5",
+  "P6"
+];
 
 let scanner = null;
 
@@ -1550,6 +1568,32 @@ btnNuevo.addEventListener(
 window.addEventListener(
   "load",
   function() {
+
+    const puestoPantalla =
+      document.getElementById("puesto");
+
+    if (puestoPantalla) {
+
+      puestoPantalla.textContent =
+        PUESTO || "SIN PUESTO";
+
+    }
+
+    if (
+      !PUESTOS_VALIDOS.includes(
+        PUESTO
+      )
+    ) {
+
+      estado.textContent =
+        "❌ Acceso inválido. Falta un puesto autorizado.";
+
+      estado.className =
+        "estado error";
+
+      return;
+
+    }
 
     iniciarEscaner();
 
